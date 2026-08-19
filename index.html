@@ -514,6 +514,9 @@ img.bleed{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 
 /* ── 8 faculty: the note carries a real link ─────────────────────────────── */
 .note .lnk{color:var(--accent); font-weight:700;}
+.bullets .lnk{color:var(--accent); font-weight:700; text-decoration:none;
+  border-bottom:1.5px solid color-mix(in srgb, var(--accent) 40%, transparent);}
+.mail-alt{color:var(--muted); font-size:.92em;}
 
 /* ── 10 Ryan: the family photo, matted rather than bled to the edge ─────── */
 .fam-pane{position:relative; display:flex; align-items:center; justify-content:center;
@@ -1552,7 +1555,8 @@ a.sv-pill:hover{filter:brightness(1.12);}
           </ul>
         </li>
         <li><strong>Office:</strong> 374D.</li>
-        <li><strong>Email:</strong> message me through the Canvas Inbox.</li>
+        <li><strong>Email:</strong> <span class="mailto" data-e="dWRlLnVzYUBsbGVucm9jcg=="></span>
+            <span class="mail-alt">(or message me through the Canvas Inbox)</span></li>
       </ul>
       <p class="note">If you&rsquo;re interested: <a class="lnk"
         href="https://dash.harvard.edu/entities/publication/73120379-2f55-6bd4-e053-0100007fdf3b"
@@ -5432,6 +5436,28 @@ show(start);
     };
     sync(active());
   });
+})();
+</script>
+<script>
+/* The address is stored reversed + base64'd and only assembled in the browser, so a
+   harvester reading the page source finds no e-mail pattern to lift. Anyone (and any
+   screen reader) still sees and can click the real thing. */
+(function(){
+  function build(){
+    document.querySelectorAll('.mailto[data-e]').forEach(function(el){
+      if(el.dataset.done) return;
+      var a = atob(el.dataset.e).split('').reverse().join('');
+      var link = document.createElement('a');
+      link.className = 'lnk';
+      link.href = 'ma' + 'ilto:' + a;
+      link.textContent = a;
+      el.textContent = '';
+      el.appendChild(link);
+      el.dataset.done = '1';
+    });
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build);
+  else build();
 })();
 </script>
 </body>
