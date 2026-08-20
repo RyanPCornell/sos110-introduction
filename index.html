@@ -873,6 +873,9 @@ a.sv-pill:hover{filter:brightness(1.12);}
 .att-note{margin-top:.9rem; font-size:clamp(.78rem,1.2vw,.92rem); color:var(--muted); font-style:italic;}
 .slide.att-slide .an-att{margin-top:1rem;}
 
+/* instructor-only bits: visible on the ?host copy, hidden on every student screen */
+body:not(.is-host) .host-only{display:none !important;}
+
 /* no publisher line on any slide */
 .footer{display:none !important;}
 
@@ -1940,7 +1943,7 @@ a.sv-pill:hover{filter:brightness(1.12);}
         <li>&ldquo;Attendance.&rdquo;</li>
         <li>I will randomly take attendance throughout semester.</li>
         <li>2 &ldquo;freebies.&rdquo;</li>
-        <li>Example below:</li>
+        <li class="host-only">Example below:</li>
       </ul>
       <div class="an-att" data-at-bar hidden>
         <button class="an-att-btn" type="button" data-at-open>Attendance</button>
@@ -1986,7 +1989,7 @@ a.sv-pill:hover{filter:brightness(1.12);}
       <h2 class="heading">Final Project</h2>
       <p class="lead">12% of your overall grade</p>
       <ul class="bullets">
-        <li>Module 3 (Library Tutorials), Module 5 (Topics Selection) and Module 7
+        <li>Module 3 (Library Tutorials), Module 5 (Topic Selection) and Module 7
             (Final Project and Presentation).</li>
         <li><strong>Final Project</strong> will be a 5- to 7-minute video about a problem that
             can be addressed using a sustainability approach.</li>
@@ -5392,6 +5395,12 @@ show(start);
   });
 
   if(status!=='live') console.info('[interactive] backend =',status,'— add real values to firebase-config.js for cross-device sync.');
+})();
+</script>
+<script>
+/* Anything marked .host-only shows on the projected copy (?host) and nowhere else. */
+(function(){
+  if(new URLSearchParams(location.search).has('host')) document.body.classList.add('is-host');
 })();
 </script>
 <script>
