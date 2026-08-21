@@ -5203,47 +5203,42 @@ show(start);
         try{ localStorage.setItem(doneKey(),'1'); }catch(e){}
         backend.mergeDocShard('polls', id, {n: backend.inc(1)});
         modal.querySelector('[data-at-donesub]').textContent = warn ||
-          ('A confirmation email is on its way to '+em+'.');
+          ('Your instructor has you on the roster. A confirmation email follows shortly.');
         formBox.hidden=true; doneBox.hidden=false;
       }
+      function fail(msg){
+        sendBtn.disabled=false; sendBtn.textContent='Submit';
+        msgEl.className='at-msg err'; msgEl.textContent=msg;
+      }
       if(!URL_){ finish('Recorded locally — your instructor has not finished setting up the attendance link yet.'); return; }
-      // text/plain keeps this a CORS "simple request" (no preflight), which is what
-      // an Apps Script web app accepts. If CORS still blocks, retry opaque so the
-      // row is written even though we cannot read the reply.
-      fetch(URL_, {method:'POST', mode:'cors', redirect:'follow',
-                   headers:{'Content-Type':'text/plain;charset=utf-8'},
-                   body:JSON.stringify(payload)})
-        .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status);
-                           return r.json().catch(function(){ return {ok:true}; }); })
-        .then(function(j){
-          if(j && j.ok===false){
-            // the server understood us and said no — a retry would not help, and
-            // silently "succeeding" would tell the student they are marked present
-            // when no row was written
-            const e=new Error(j.error||'rejected'); e.rejected=true; throw e;
-          }
-          finish(null);
-        })
-        .catch(function(err){
-          if(err && err.rejected){
-            sendBtn.disabled=false; sendBtn.textContent='Submit';
-            msgEl.className='at-msg err';
-            msgEl.textContent='Not recorded — the attendance server said: '+err.message+
-                              '. Please tell your instructor.';
-            return;
-          }
-          // network/CORS failure: we cannot read the reply, so send it blind rather
-          // than block a student who really did submit
-          return fetch(URL_, {method:'POST', mode:'no-cors',
-                              headers:{'Content-Type':'text/plain;charset=utf-8'},
-                              body:JSON.stringify(payload)})
-            .then(function(){ finish(null); })
-            .catch(function(){
-              sendBtn.disabled=false; sendBtn.textContent='Submit';
-              msgEl.className='at-msg err';
-              msgEl.textContent='Could not reach the attendance server. Check your connection and try again.';
-            });
-        });
+
+      // A roll call is a thundering herd: 300 browsers POST at once and Apps
+      // Script only runs ~30 at a time. So spread the first attempt over a few
+      // seconds, then back off — and NEVER claim success we have not been told
+      // about: the count on the slide has to mean "a row was written".
+      const TRIES=5, WAITS=[1500, 3500, 7000, 12000];
+      function attempt(k){
+        sendBtn.textContent = k===1 ? 'Sending…' : 'Still trying… ('+k+' of '+TRIES+')';
+        fetch(URL_, {method:'POST', mode:'cors', redirect:'follow',
+                     headers:{'Content-Type':'text/plain;charset=utf-8'},
+                     body:JSON.stringify(payload)})
+          .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+          .then(function(j){
+            if(j && j.ok===true){ finish(null); return; }
+            // the server understood us and said no — retrying cannot help
+            const e=new Error((j&&j.error)||'rejected'); e.rejected=true; throw e;
+          })
+          .catch(function(err){
+            if(err && err.rejected){
+              fail('Not recorded — the attendance server said: '+err.message+'. Please tell your instructor.');
+              return;
+            }
+            if(k<TRIES){ setTimeout(function(){ attempt(k+1); }, WAITS[k-1]+Math.random()*800); return; }
+            fail('Could not reach the attendance server after several tries. Please press Submit again.');
+          });
+      }
+      sendBtn.textContent='Sending…';
+      setTimeout(function(){ attempt(1); }, Math.random()*4000);
     }
     sendBtn.addEventListener('click', send);
 
