@@ -1101,41 +1101,6 @@ body:not(.is-host) .host-only{display:none !important;}
 .poll-embed .poll-total,.poll-embed .poll-hint{font-size:clamp(.7rem,1.05vw,.82rem);}
 .poll-embed .poll-reset{font-size:.74rem; padding:.35rem .75rem;}
 .poll-embed.host .poll-opt{cursor:default;}
-
-
-.slide.wordcloud{background:linear-gradient(160deg,#f4f8f6,#e8f1ec);}
-.wc-root{position:absolute; inset:0; display:flex; flex-direction:column;
-  padding:clamp(1.1rem,2.8vh,2rem) clamp(1.5rem,3.4vw,3.4rem) clamp(1rem,2.4vh,1.6rem);}
-.wc-head{margin-bottom:clamp(.4rem,1.2vh,.9rem);}
-.wc-head .heading{margin-bottom:.3rem;}
-.wc-sub{font-size:clamp(.85rem,1.35vw,1rem); color:var(--muted); max-width:72ch;}
-.wc-cloud{flex:1; min-height:0; display:flex; flex-wrap:wrap; align-content:center; justify-content:center;
-  align-items:center; gap:.1em .5em; overflow:hidden; text-align:center; padding:.4rem;}
-.wc-word{font-family:'Merriweather',serif; font-weight:800; line-height:1.02; letter-spacing:-.01em;
-  white-space:nowrap; transition:font-size .5s ease, opacity .5s ease;
-  animation:wc-pop .35s ease;}
-@keyframes wc-pop{0%{transform:scale(.5); opacity:0;}100%{transform:scale(1);}}
-.wc-word.mine{text-decoration:underline; text-decoration-thickness:.07em; text-underline-offset:.14em;}
-.wc-empty{font-family:'Inter',sans-serif; color:var(--muted); font-style:italic; font-weight:500;
-  font-size:clamp(1rem,1.6vw,1.2rem);}
-.wc-form{display:flex; gap:.6rem; max-width:580px; width:100%; margin:0 auto;}
-.wc-input{flex:1; min-width:0; font-family:inherit; font-size:clamp(.95rem,1.5vw,1.1rem);
-  padding:.72rem .95rem; border:2px solid var(--line); border-radius:11px; background:#fff; color:var(--ink);}
-.wc-input:focus{outline:none; border-color:var(--accent);}
-.wc-submit{flex:none; font-family:inherit; font-weight:800; font-size:clamp(.95rem,1.5vw,1.1rem);
-  padding:.72rem 1.7rem; border:none; border-radius:11px; background:var(--forest-mid); color:#fff; cursor:pointer;
-  transition:filter .15s, transform .08s;}
-.wc-submit:hover{filter:brightness(1.1);}
-.wc-submit:active{transform:translateY(1px);}
-.wc-foot{display:flex; align-items:center; gap:1rem; margin-top:clamp(.55rem,1.4vh,.95rem);
-  max-width:1060px; width:100%; margin-left:auto; margin-right:auto;}
-.wc-total{font-size:clamp(.82rem,1.3vw,.98rem); color:#33453d;}
-.wc-total strong{font-family:'Merriweather',serif; color:var(--forest); font-size:1.15em;}
-.wc-hint{font-size:clamp(.78rem,1.2vw,.9rem); color:var(--muted); font-style:italic;}
-.wc-reset{margin-left:auto; background:#fff; border:1.5px solid var(--line); color:var(--muted);
-  font-family:inherit; font-size:.82rem; font-weight:600; padding:.5rem .9rem; border-radius:9px; cursor:pointer;}
-.wc-reset:hover{border-color:var(--accent); color:var(--accent);}
-.slide.wordcloud.host .wc-form{display:none;}
 </style>
 </head>
 <body>
@@ -1466,26 +1431,6 @@ body:not(.is-host) .host-only{display:none !important;}
     </div>
   </div>
 </section>
-<section class="slide wordcloud" data-type="wordcloud" data-wc-id="intro-favorite-restaurant" style="--accent:#6D597A">
-  <div class="wc-root">
-    <div class="wc-head">
-      <div class="eyebrow">Class · Live Word Cloud</div>
-      <h2 class="heading">Question: What is your favorite restaurant?</h2>
-      <div class="wc-sub">Type the name of a restaurant — it joins the class cloud, and the more of you name the same place, the bigger it grows.</div>
-    </div>
-    <div class="wc-cloud" data-wc-cloud><div class="wc-empty">Waiting for the first response…</div></div>
-    <form class="wc-form" data-wc-form>
-      <input class="wc-input" data-wc-input type="text" maxlength="32" autocomplete="off"
-             autocapitalize="none" spellcheck="false" placeholder="Type a restaurant and press Enter" aria-label="Your word">
-      <button class="wc-submit" type="submit">Add</button>
-    </form>
-    <div class="wc-foot">
-      <span class="wc-total"><strong data-wc-total>0</strong> responses</span>
-      <span class="wc-hint" data-wc-hint>Type a word that comes to mind.</span>
-      <button class="wc-reset" type="button" data-wc-reset hidden>Reset responses</button>
-    </div>
-  </div>
-</section>
 <section class="slide plate roles" data-type="content" style="--accent:#52796F">
   <div class="bleed-grid">
     <div class="bleed-text">
@@ -1718,7 +1663,7 @@ body:not(.is-host) .host-only{display:none !important;}
   </div>
   <div class="footer"></div>
   <script>
-  window.GO_SLIDE={"inquizitive": 15, "midterms": 16, "wwyd": 17, "review": 18, "attendance": 19, "final": 20};
+  window.GO_SLIDE={"inquizitive": 14, "midterms": 15, "wwyd": 16, "review": 17, "attendance": 18, "final": 19};
   (function(){
     var sec=document.currentScript.closest('.slide');
     var parts=sec.querySelectorAll('[data-i]');
@@ -2151,7 +2096,7 @@ body:not(.is-host) .host-only{display:none !important;}
 
 <div class="hud">
   <button onclick="prev()" title="Previous (left arrow)">&#8249;</button>
-  <span class="counter" id="counter">1 / 24</span>
+  <span class="counter" id="counter">1 / 23</span>
   <button onclick="next()" title="Next (right arrow)">&#8250;</button>
   <button onclick="toggleMenu()" title="Slide menu (O)">&#9776;</button>
   <button onclick="toggleFs()" title="Fullscreen (F)">&#9974;</button>
@@ -2160,7 +2105,7 @@ body:not(.is-host) .host-only{display:none !important;}
 <div class="menu" id="menu">
   <button class="menu-close" onclick="toggleMenu(false)" aria-label="Close menu">&times;</button>
   <h3>Introduction &mdash; Jump to a slide</h3>
-  <div class="menu-grid"><button class="menu-item" data-go="0"><span class="menu-num">1</span>Title · Welcome to SOS 110</button><button class="menu-item" data-go="1"><span class="menu-num">2</span>Disclaimer</button><button class="menu-item" data-go="2"><span class="menu-num">3</span>Course · Sustainability, defined</button><button class="menu-item" data-go="3"><span class="menu-num">4</span>Course · Sustainable yield</button><button class="menu-item" data-go="4"><span class="menu-num">5</span>Course · What's it all about? (photos)</button><button class="menu-item" data-go="5"><span class="menu-num">6</span>Course · Goals</button><button class="menu-item" data-go="6"><span class="menu-num">7</span>Class ▶ Poll: How are you feeling?</button><button class="menu-item" data-go="7"><span class="menu-num">8</span>Class ▶ Word Cloud: Restaurants</button><button class="menu-item" data-go="8"><span class="menu-num">9</span>Roles</button><button class="menu-item" data-go="9"><span class="menu-num">10</span>Introducing · Ryan Cornell</button><button class="menu-item" data-go="10"><span class="menu-num">11</span>Introducing · Aurora Cossairt</button><button class="menu-item" data-go="11"><span class="menu-num">12</span>Introducing · Khampha Stempel</button><button class="menu-item" data-go="12"><span class="menu-num">13</span>Resources</button><button class="menu-item" data-go="13"><span class="menu-num">14</span>How to Use Canvas</button><button class="menu-item" data-go="14"><span class="menu-num">15</span>Grading Overview</button><button class="menu-item" data-go="15"><span class="menu-num">16</span>Assignments · Quizzes</button><button class="menu-item" data-go="16"><span class="menu-num">17</span>Assignments · Midterm Tests</button><button class="menu-item" data-go="17"><span class="menu-num">18</span>Assignments · What Would You Do?</button><button class="menu-item" data-go="18"><span class="menu-num">19</span>Assignments · Review Exercises</button><button class="menu-item" data-go="19"><span class="menu-num">20</span>Participation</button><button class="menu-item" data-go="20"><span class="menu-num">21</span>Assignments · Final Project</button><button class="menu-item" data-go="21"><span class="menu-num">22</span>How to Be Successful</button><button class="menu-item" data-go="22"><span class="menu-num">23</span>Important Miscellaneous Points</button><button class="menu-item" data-go="23"><span class="menu-num">24</span>To Do</button></div>
+  <div class="menu-grid"><button class="menu-item" data-go="0"><span class="menu-num">1</span>Title · Welcome to SOS 110</button><button class="menu-item" data-go="1"><span class="menu-num">2</span>Disclaimer</button><button class="menu-item" data-go="2"><span class="menu-num">3</span>Course · Sustainability, defined</button><button class="menu-item" data-go="3"><span class="menu-num">4</span>Course · Sustainable yield</button><button class="menu-item" data-go="4"><span class="menu-num">5</span>Course · What's it all about? (photos)</button><button class="menu-item" data-go="5"><span class="menu-num">6</span>Course · Goals</button><button class="menu-item" data-go="6"><span class="menu-num">7</span>Class ▶ Poll: How are you feeling?</button><button class="menu-item" data-go="7"><span class="menu-num">8</span>Roles</button><button class="menu-item" data-go="8"><span class="menu-num">9</span>Introducing · Ryan Cornell</button><button class="menu-item" data-go="9"><span class="menu-num">10</span>Introducing · Aurora Cossairt</button><button class="menu-item" data-go="10"><span class="menu-num">11</span>Introducing · Khampha Stempel</button><button class="menu-item" data-go="11"><span class="menu-num">12</span>Resources</button><button class="menu-item" data-go="12"><span class="menu-num">13</span>How to Use Canvas</button><button class="menu-item" data-go="13"><span class="menu-num">14</span>Grading Overview</button><button class="menu-item" data-go="14"><span class="menu-num">15</span>Assignments · Quizzes</button><button class="menu-item" data-go="15"><span class="menu-num">16</span>Assignments · Midterm Tests</button><button class="menu-item" data-go="16"><span class="menu-num">17</span>Assignments · What Would You Do?</button><button class="menu-item" data-go="17"><span class="menu-num">18</span>Assignments · Review Exercises</button><button class="menu-item" data-go="18"><span class="menu-num">19</span>Participation</button><button class="menu-item" data-go="19"><span class="menu-num">20</span>Assignments · Final Project</button><button class="menu-item" data-go="20"><span class="menu-num">21</span>How to Be Successful</button><button class="menu-item" data-go="21"><span class="menu-num">22</span>Important Miscellaneous Points</button><button class="menu-item" data-go="22"><span class="menu-num">23</span>To Do</button></div>
 </div>
 
 <script>
