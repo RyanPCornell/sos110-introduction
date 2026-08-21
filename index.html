@@ -1878,6 +1878,7 @@ body:not(.is-host) .host-only{display:none !important;}
         <select class="an-att-sel" data-at-section aria-label="Class section"><option value="MWF0905">MWF 9:05 am</option><option value="MWF1220">MWF 12:20 pm</option><option value="TTH1200">TTh 12:00 pm</option></select>
         <button class="an-att-btn go" type="button" data-at-finalize hidden>Submit Attendance</button>
         <button class="an-att-cancel" type="button" data-at-cancel hidden>Cancel</button>
+        <button class="an-att-cancel" type="button" data-at-clear hidden>Clear last roll call</button>
         <span class="an-att-status" data-at-status></span>
       </div>
       <p class="att-note">When I start a roll call, a short name-and-email form pops up on your screen &mdash;
@@ -5292,6 +5293,17 @@ show(start);
       cancelBtn.addEventListener('click', function(){
         backend.mergeDoc('polls', id, {open:0});
       });
+      // optional: wipe the last roll call so the slide is clean for the next class
+      const clearBtn=sec.querySelector('[data-at-clear]');
+      if(clearBtn){
+        clearBtn.hidden=false;
+        clearBtn.addEventListener('click', function(){
+          if(!confirm('Clear the last roll call from this slide?\n\n(The roster that was emailed is unaffected.)')) return;
+          backend.setDoc('polls', id, {open:0, session:'', n:0, sec:'', secLabel:''});
+          try{ Object.keys(localStorage).forEach(function(k){
+            if(k.indexOf('att-done:'+id+':')===0) localStorage.removeItem(k); }); }catch(e){}
+        });
+      }
       finBtn.addEventListener('click', function(){
         backend.mergeDoc('polls', id, {open:0});
         if(!URL_){ alert('No attendance link is configured yet — see ATTENDANCE-SETUP.md.'); return; }
